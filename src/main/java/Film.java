@@ -1,6 +1,5 @@
 import javax.xml.bind.annotation.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,14 +12,14 @@ class Films {
 
 public class Film implements Serializable {
 
+    @XmlElement(name="INTERPRETS")
+    String interprets;
+
     @XmlElement(name="IDFILM")
     String idFilm;
 
     @XmlElement(name="TITOL")
     String titol;
-
-    @XmlElement(name="INTERPRETS")
-    String interpretets;
 
     @XmlElement(name="ANY")
     int any;
@@ -43,8 +42,6 @@ public class Film implements Serializable {
         Film film = (Film) o;
         return Objects.equals(idioma, film.idioma);
     }
-
-
 
     @Override
     public int hashCode() {
@@ -90,7 +87,7 @@ public class Film implements Serializable {
         return sinopsi;
     }
 
-    public String getInterpretets() { return interpretets; }
+    public String getInterprets() { return interprets; }
 
     public String getIdioma() {
         return idioma;

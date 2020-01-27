@@ -1,5 +1,3 @@
-import org.w3c.dom.ls.LSOutput;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -12,9 +10,11 @@ import java.util.stream.Collectors;
 
 public class ConeccionXML {
     long numResultat;
-    Film film = new Film();
     List<Film> films;
-    Scanner scanner = new Scanner(System.in);
+
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
 
     public void connected() throws JAXBException, IOException {
         URL url = new URL("http://gencat.cat/llengua/cinema/provacin.xml");
@@ -33,17 +33,17 @@ public class ConeccionXML {
         numResultat= films.stream().filter(film1 -> film1.getTitol().contains(input))
                 .count();
 
-        System.out.println("Resultado: " + numResultat);
+        System.out.println(ANSI_PURPLE + "Resultado: " + numResultat+ANSI_RESET);
     }
 
     public void buscarPorDirector(String input){
-        films.stream().filter(film1 -> film1.getDireccio().equals(film.getBuscar()))
+        films.stream().filter(film1 -> film1.getDireccio().equals(input))
                 .forEach(System.out::println);
 
-        numResultat= films.stream().filter(film1 -> film1.getDireccio().equals(film.getBuscar()))
+        numResultat= films.stream().filter(film1 -> film1.getDireccio().equals(input))
                 .count();
 
-        System.out.println("Resultado: " + numResultat);
+        System.out.println(ANSI_PURPLE +"Resultado: " + numResultat+ANSI_RESET);
     }
 
     public void buscarPorAño(int input){
@@ -53,19 +53,25 @@ public class ConeccionXML {
         numResultat= films.stream().filter(film1 -> film1.getAny() == input)
                 .count();
 
-        System.out.println("Resultado: " + numResultat);
+        System.out.println(ANSI_PURPLE +"Resultado: " + numResultat+ANSI_RESET);
 
     }
 
-    public void buscarPorInterprete( String input) {
-        films.stream().filter(film1 -> film1.getInterpretets().equals(input))
-                .forEach(System.out::println);
-
-        numResultat= films.stream().filter(film1 -> film1.getInterpretets().equals(input))
-                .count();
-
-        System.out.println("Resultado: " + numResultat);
-    }
+//    public void buscarPorInterprete(String input) throws NullPointerException {
+//
+//        films.stream().filter(film1 -> film1.getInterprets().contains(input))
+//                .forEach(film -> System.out.println(film.getInterprets()));
+//
+////        List<Film> lista = films.stream().collect(Collectors.toList());
+////        lista.stream().filter(film1 -> film1.getInterprets().contains(input)).
+////                forEach(film -> System.out.println
+////                ("Película: " + film.getTitol() + "\n" + "Interpretes: " + film.getInterprets() + "\n"));
+//
+////        numResultat= films.stream().filter(film1 -> film1.getInterprets().contains(input))
+////                .count();
+////
+////        System.out.println(ANSI_PURPLE+ "Resultado: " + numResultat+ANSI_RESET);
+//    }
 
     public void maxYear(){
 
@@ -106,5 +112,9 @@ public class ConeccionXML {
 
     public void modificarAño() {
         films.stream().map(film1 -> film1.getAny() - 1);
+    }
+
+    public void ordenarPorAños(){
+        films.stream().sorted(Comparator.comparingInt(Film::getAny)).collect(Collectors.toList()).forEach(System.out::println);
     }
 }

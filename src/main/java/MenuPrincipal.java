@@ -16,18 +16,22 @@ public class MenuPrincipal {
         ConeccionXML coneccionXML = new ConeccionXML();
         coneccionXML.connected();
 
-        System.out.println("BUSCADOR FILMS");
         Scanner sc = new Scanner(System.in);
         int opcion;
         do{
-            System.out.println("0. LISTAR FILMS");
+            System.out.println(ANSI_CYAN + "FILMS" + ANSI_RESET);
+            System.out.println("Buscador: ");
             System.out.println("1. POR TITULO ");
             System.out.println("2. POR DIRECTOR");
             System.out.println("3. POR AÑO");
             System.out.println("4. POR INTERPRETE");
+            System.out.println();
+            System.out.println("Otras opciones:");
             System.out.println("5. MODIFICAR AÑOS DE LAS PELICULAS");
-            System.out.println("6. DATOS CURIOSOS");
-            System.out.println("7. Acabar");
+            System.out.println("6. LISTA DE PELICULAS POR AÑO (ORDENADO)");
+            System.out.println("7. DATOS CURIOSOS");
+            System.out.println();
+            System.out.println("8. Acabar");
 
             opcion= sc.nextInt();
 
@@ -46,13 +50,13 @@ public class MenuPrincipal {
                     break;
                 case 3:
                     System.out.print("Escribe el año: ");
-                    int input1 = scanner.nextInt();
+                    int input1 = sc.nextInt();
                     coneccionXML.buscarPorAño(input1);
                     break;
                 case 4:
-                    System.out.print("Escribe el interprete: ");
-                    input = scanner.nextLine();
-                    coneccionXML.buscarPorInterprete(input);
+//                    System.out.print("Escribe el interprete: ");
+//                    input = scanner.nextLine();
+////                    coneccionXML.buscarPorInterprete(input);
                     break;
                 case 5:
                     System.out.println("Al parecer todas las peliculas tienen un año de más");
@@ -60,6 +64,10 @@ public class MenuPrincipal {
                     coneccionXML.modificarAño();
                     break;
                 case 6:
+                    System.out.println("Lista Peliculas Ordenadas por Año");
+                    coneccionXML.ordenarPorAños();
+                    break;
+                case 7:
                     System.out.print(ANSI_CYAN + "¿Cuantas peliculas en catalán hay?: " + ANSI_RESET);
                     coneccionXML.filmsCatala();
                     System.out.println();
@@ -74,6 +82,6 @@ public class MenuPrincipal {
                     coneccionXML.idiomasDisponibles();
                     break;
             }
-        } while (opcion!=4);
+        } while (opcion!=8);
     }
 }
